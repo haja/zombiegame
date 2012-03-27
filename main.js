@@ -13,7 +13,7 @@ function Game() {
 	this.fps = 48;
 	this.ctx = document.getElementById("canvas").getContext("2d");
 
-	this.player1 = new Player(PLAYER_START_X, PLAYER_START_Y, PLAYER_SIZE);
+	this.player1 = new Actor(PLAYER_START_X, PLAYER_START_Y, PLAYER_SIZE);
 
 	// field init
 	LoadResources();
@@ -80,8 +80,8 @@ handleKeyUp = function(e) {
 	}
 }
 
-// Player class
-function Player(x, y, size) {
+// Actor class
+function Actor(x, y, size) {
 	this.x = x;
 	this.y = y;
 	this.size = size;
@@ -89,7 +89,7 @@ function Player(x, y, size) {
 	this.MOVE_BY = 2; // pixels we are moving in one step
 }
 
-Player.prototype.update = function() {
+Actor.prototype.update = function() {
 	if(this.isMovingUp)
 		this.moveUp(myGame.gamefield);
 	if(this.isMovingDown)
@@ -100,7 +100,7 @@ Player.prototype.update = function() {
 		this.moveRight(myGame.gamefield);
 }
 
-Player.prototype.moveTo = function(newX, newY, tile1, tile2) {
+Actor.prototype.moveTo = function(newX, newY, tile1, tile2) {
 	if(tile1.walkable && tile2.walkable) {
 		this.y = newY;
 		this.x = newX;
@@ -109,14 +109,14 @@ Player.prototype.moveTo = function(newX, newY, tile1, tile2) {
 	return false;
 }
 
-Player.prototype.moveUp = function(gamefield) {
+Actor.prototype.moveUp = function(gamefield) {
 	var destinationY = this.y - this.MOVE_BY;
 	var tile1 = gamefield.getTileAt(this.x, destinationY);
 	var tile2 = gamefield.getTileAt(this.x + this.size, destinationY);
 	return this.moveTo(this.x, destinationY, tile1, tile2);
 }
 
-Player.prototype.moveDown = function(gamefield) {
+Actor.prototype.moveDown = function(gamefield) {
 	var destinationY = this.y + this.MOVE_BY;
 	var collisionTestY = destinationY + this.size;
 	var tile1 = gamefield.getTileAt(this.x, collisionTestY);
@@ -124,14 +124,14 @@ Player.prototype.moveDown = function(gamefield) {
 	return this.moveTo(this.x, destinationY, tile1, tile2);
 }
 
-Player.prototype.moveLeft = function(gamefield) {
+Actor.prototype.moveLeft = function(gamefield) {
 	var destinationX = this.x - this.MOVE_BY;
 	var tile1 = gamefield.getTileAt(destinationX, this.y);
 	var tile2 = gamefield.getTileAt(destinationX, this.y + this.size);
 	return this.moveTo(destinationX, this.y, tile1, tile2);
 }
 
-Player.prototype.moveRight = function(gamefield) {
+Actor.prototype.moveRight = function(gamefield) {
 	var destinationX = this.x + this.MOVE_BY;
 	var collisionTestX = destinationX + this.size;
 	var tile1 = gamefield.getTileAt(collisionTestX, this.y);
@@ -139,7 +139,7 @@ Player.prototype.moveRight = function(gamefield) {
 	return this.moveTo(destinationX, this.y, tile1, tile2);
 }
 
-Player.prototype.draw = function(ctx) {
+Actor.prototype.draw = function(ctx) {
 	ctx.fillStyle="#FFFFFF";
 	ctx.fillRect(this.x, this.y, this.size, this.size);
 }
