@@ -4,10 +4,33 @@ function Field(fieldsize, tilesize) {
 	this.fieldsize = fieldsize;
 	this.tilesize = tilesize;
 	
-	for (var i = 0; i < fieldsize * fieldsize; i++) {
+	this.clear = function() {
 		var obj = { walkable : false, tile : 0 };
-		this.tiles.push(obj);
+		var obj2 = { walkable : true, tile : 1 };
+		for (var y = 0; y < this.fieldsize; y++)
+		for (var x = 0; x < this.fieldsize; x++) {
+			if ( ((x%10 < 2) || (x%10 > 7)) && ((y%10 == 4 || y%10 == 5)))
+				this.tiles.push(obj2);
+			else if ( ((y%10 < 2) || (y%10 > 7)) && ((x%10 == 4 || x%10 == 5)))
+				this.tiles.push(obj2);
+			else if ( x%10 >= 2 && x%10 <= 7 && y%10 >= 2 && y%10 <= 7)
+				this.tiles.push(obj2);			
+			else this.tiles.push(obj);
+		}	
 	}
+
+	this.clear();
+	
+	this.set = function(x, y, newobj) {
+		var ix = x;
+		var iy = y;
+		if (ix < 0) ix = 0;
+		if (iy < 0) iy = 0;
+		if (ix >= this.fieldsize) ix = this.fieldsize - 1; 
+		if (iy >= this.fieldsize) iy = this.fieldsize - 1; 
+		var index = ix + this.fieldsize * iy;
+		this.tiles[index] = newobj;
+	} 
 	
 	this.get = function(x, y) {
 		var ix = x;
