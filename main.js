@@ -37,6 +37,10 @@ handleMouseDown = function(e) {
 	myGame.shootAt(e.clientX - ourCanvas.offsetLeft, e.clientY - ourCanvas.offsetTop);
 }
 
+handleMouseMove = function(e) {
+	textBox.innerHTML = "Mouse: x: " + (e.clientX - ourCanvas.offsetLeft) + " y: " + (e.clientY - ourCanvas.offsetTop);
+}
+
 
 var myGame = new Game();
 
@@ -50,3 +54,6 @@ document.body.onkeyup = handleKeyUp;
 
 var ourCanvas = document.getElementById("canvas");
 ourCanvas.onmousedown = handleMouseDown;
+
+var textBox = document.getElementById("textBox");
+ourCanvas.onmousemove = handleMouseMove;
