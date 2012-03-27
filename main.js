@@ -15,8 +15,6 @@ handleKeyDown = function(e) {
 	} else if(e.keyCode == 68) {
 		// w pressed
 		myGame.player1.isMovingRight = true;
-	} else {
-		alert(e.keyCode);
 	}
 };
 
