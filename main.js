@@ -4,8 +4,8 @@ var height = 450; // canvas height
 var FIELDSIZE = 200;
 var TILESIZE = 50;
 
-var PLAYER_START_X = 100;
-var PLAYER_START_Y = 100;
+var PLAYER_START_X = 120;
+var PLAYER_START_Y = 200;
 var PLAYER_SIZE = 50;
 
 
@@ -30,6 +30,7 @@ Game.prototype.update = function() {
 
 Game.prototype.draw = function() {
 	this.gamefield.draw(this.ctx);
+	this.player1.draw(this.ctx);
 };
 
 Game.prototype.run = function() {
@@ -48,6 +49,11 @@ handleKeyDown = function(e) {
 	if(e.keyCode == 87) {
 		// w pressed
 		myGame.player1.moveUp(myGame.gamefield);
+	} else	if(e.keyCode == 83) {
+		// s pressed
+		myGame.player1.moveDown(myGame.gamefield);
+	} else {
+		alert(e.keyCode);
 	}
 };
 
@@ -60,17 +66,31 @@ function Player(x, y, size) {
 	this.MOVE_BY = 2; // pixels we are moving in one step
 }
 
-Player.prototype.moveUp = function(gamefield) {
-	var destinationY = this.y + this.MOVE_BY;
-	var tile = gamefield.getTileAt(this.x, destinationY);
+Player.prototype.moveTo = function(x, y, gamefield) {
+	var tile = gamefield.getTileAt(x, y);
 
 	if(tile.walkable) {
-		this.y = destinationY;
+		this.y = y;
+		this.x = x;
 		return true;
 	}
 	return false;
 }
 
+Player.prototype.moveUp = function(gamefield) {
+	var destinationY = this.y - this.MOVE_BY;
+	return Player.prototype.moveTo(this.x, destinationY, gamefield);
+}
+
+Player.prototype.moveDown = function(gamefield) {
+	var destinationY = this.y + this.MOVE_BY;
+	return Player.prototype.moveTo(this.x, destinationY, gamefield);
+}
+
+Player.prototype.draw = function(ctx) {
+	ctx.fillStyle="#FFFFFF";
+	ctx.fillRect(this.x, this.y, this.size, this.size);
+}
 
 var myGame = new Game();
 
