@@ -19,6 +19,8 @@ function Game() {
 		this.restore();
 	}
 	this.player1 = new Actor(PLAYER_START_X, PLAYER_START_Y, PLAYER_SIZE);
+	this.player1.hp = 100;
+
 	this.camera = { x : 0, y : 0 };
 
 	// field init
@@ -29,6 +31,16 @@ function Game() {
 	this.looping.skipTicks = 1000 / this.fps;
 	this.looping.maxFrameSkip = 10;
 	this.looping.nextGameTick = (new Date).getTime();
+
+	// player customization
+	this.player1.draw = function(ctx, cam) {
+		Actor.prototype.draw.call(this, ctx, cam);
+
+		// draw hud
+		ctx.fillStlye = "#000000";
+		ctx.font = "20pt Arial";
+		ctx.fillText("HP: " + this.hp, 20, 40);
+	};
 }
 
 Game.prototype.update = function() {
@@ -57,3 +69,6 @@ Game.prototype.run = function() {
 Game.prototype.shootAt = function(x, y) {
 	alert("x: " + x.toString() + " y: " + y.toString());
 }
+
+
+
