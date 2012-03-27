@@ -1,6 +1,5 @@
-var HORZ_SIZE = 800;
-var VERT_SIZE = 450;
-var TILE_SIZE = 50;
+var width = 800; // canvas width
+var height = 450; // canvas height
 
 var FIELDSIZE = 200;
 var TILESIZE = 50;
@@ -33,7 +32,7 @@ Game.prototype.update = function() {
 
 Game.prototype.draw = function() {
 	this.ctx.fillStyle = "gray";
-	this.ctx.fillRect(0, 0, 800, 450);
+	this.ctx.fillRect(0, 0, width, height);
 	this.ctx.fillStyle = "red";
 	this.ctx.fillRect(this.startX, this.startY, this.tileSize, this.tileSize);
 };
