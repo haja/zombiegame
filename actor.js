@@ -1,10 +1,10 @@
 // Actor class
-function Actor(x, y, size) {
+function Actor(x, y, size, moveBy) {
 	this.x = x;
 	this.y = y;
 	this.size = size;
 
-	this.MOVE_BY = 2; // pixels we are moving in one step
+	this.moveBy = moveBy; // pixels we are moving in one step
 }
 
 Actor.prototype.update = function() {
@@ -28,14 +28,14 @@ Actor.prototype.moveTo = function(newX, newY, tile1, tile2) {
 }
 
 Actor.prototype.moveUp = function(gamefield) {
-	var destinationY = this.y - this.MOVE_BY;
+	var destinationY = this.y - this.moveBy;
 	var tile1 = gamefield.getTileAt(this.x, destinationY);
 	var tile2 = gamefield.getTileAt(this.x + this.size, destinationY);
 	return this.moveTo(this.x, destinationY, tile1, tile2);
 }
 
 Actor.prototype.moveDown = function(gamefield) {
-	var destinationY = this.y + this.MOVE_BY;
+	var destinationY = this.y + this.moveBy;
 	var collisionTestY = destinationY + this.size;
 	var tile1 = gamefield.getTileAt(this.x, collisionTestY);
 	var tile2 = gamefield.getTileAt(this.x + this.size, collisionTestY);
@@ -43,14 +43,14 @@ Actor.prototype.moveDown = function(gamefield) {
 }
 
 Actor.prototype.moveLeft = function(gamefield) {
-	var destinationX = this.x - this.MOVE_BY;
+	var destinationX = this.x - this.moveBy;
 	var tile1 = gamefield.getTileAt(destinationX, this.y);
 	var tile2 = gamefield.getTileAt(destinationX, this.y + this.size);
 	return this.moveTo(destinationX, this.y, tile1, tile2);
 }
 
 Actor.prototype.moveRight = function(gamefield) {
-	var destinationX = this.x + this.MOVE_BY;
+	var destinationX = this.x + this.moveBy;
 	var collisionTestX = destinationX + this.size;
 	var tile1 = gamefield.getTileAt(collisionTestX, this.y);
 	var tile2 = gamefield.getTileAt(collisionTestX, this.y + this.size);

@@ -4,6 +4,7 @@ var TILESIZE = 50;
 var PLAYER_START_X = 120;
 var PLAYER_START_Y = 200;
 var PLAYER_SIZE = 50;
+var PLAYER_SPEED = 4;
 
 
 function Game() {
@@ -18,7 +19,7 @@ function Game() {
 		this.drawImage(image, xpos, ypos);
 		this.restore();
 	}
-	this.player1 = new Actor(PLAYER_START_X, PLAYER_START_Y, PLAYER_SIZE);
+	this.player1 = new Actor(PLAYER_START_X, PLAYER_START_Y, PLAYER_SIZE, PLAYER_SPEED);
 	this.player1.hp = 100;
 
 	this.camera = { x : 0, y : 0 };
