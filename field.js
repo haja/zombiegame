@@ -50,11 +50,18 @@ function Field(fieldsize, tilesize) {
 		);
 	}
 	
-	this.draw = function(ctx) {
-		for (var x = 0; x < this.fieldsize; x++)
-		for (var y = 0; y < this.fieldsize; y++) {
+	this.draw = function(ctx, cam) {
+		var ix = Math.floor(cam.x / this.tilesize);
+		var iy = Math.floor(cam.y / this.tilesize);
+		var ix2 = ix + Math.floor(width / this.tilesize) + this.tilesize;
+		var iy2 = iy + Math.floor(height / this.tilesize) + this.tilesize;
+		
+		for (var x = ix; x < ix2; x++)
+		for (var y = iy; y < iy2; y++) {
 			var tile = this.get(x, y);	
-			ctx.drawImage(images[tile.tile], x * this.tilesize, y * this.tilesize);
+			ctx.drawImage(images[tile.tile], 
+				x * this.tilesize - cam.x, 
+				y * this.tilesize - cam.y);
 		}
 	}
 }

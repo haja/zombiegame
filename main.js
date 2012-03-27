@@ -1,7 +1,6 @@
 var width = 800; // canvas width
 var height = 450; // canvas height
 
-
 handleKeyDown = function(e) {
 	if(e.keyCode == 87) {
 		// w pressed

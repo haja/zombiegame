@@ -11,6 +11,7 @@ function Game() {
 	this.ctx = document.getElementById("canvas").getContext("2d");
 
 	this.player1 = new Actor(PLAYER_START_X, PLAYER_START_Y, PLAYER_SIZE);
+	this.camera = { x : 0, y : 0 };
 
 	// field init
 	LoadResources();
@@ -24,11 +25,13 @@ function Game() {
 
 Game.prototype.update = function() {
 	this.player1.update();
+	this.camera.x = this.player1.x - width / 2;
+	this.camera.y = this.player1.y - height / 2;
 };
 
 Game.prototype.draw = function() {
-	this.gamefield.draw(this.ctx);
-	this.player1.draw(this.ctx);
+	this.gamefield.draw(this.ctx, this.camera);
+	this.player1.draw(this.ctx, this.camera);
 };
 
 Game.prototype.run = function() {

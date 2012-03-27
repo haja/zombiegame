@@ -57,7 +57,7 @@ Actor.prototype.moveRight = function(gamefield) {
 	return this.moveTo(destinationX, this.y, tile1, tile2);
 }
 
-Actor.prototype.draw = function(ctx) {
+Actor.prototype.draw = function(ctx, cam) {
 	ctx.fillStyle="#FFFFFF";
-	ctx.fillRect(this.x, this.y, this.size, this.size);
+	ctx.fillRect(this.x - cam.x, this.y - cam.y, this.size, this.size);
 }
