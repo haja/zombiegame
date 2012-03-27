@@ -11,8 +11,6 @@ function draw() {
 	var canvas = document.getElementById("canvas");  	
 	var ctx = canvas.getContext("2d");
 	field.draw(ctx);
-	ctx.fillStyle = "red";
-	ctx.fillRect(50, 50, 50, 50);
 }
 
 function update() {
