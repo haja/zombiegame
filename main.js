@@ -11,13 +11,12 @@ var PLAYER_SIZE = 50;
 
 function Game() {
 	this.fps = 48;
-	this.startX = 20;
-	this.startY = 20;
-	this.tileSize = 50;
 	this.ctx = document.getElementById("canvas").getContext("2d");
 
-	this.player = new Player(PLAYER_START_X, PLAYER_START_Y, PLAYER_SIZE);
+	this.player1 = new Player(PLAYER_START_X, PLAYER_START_Y, PLAYER_SIZE);
 
+	// field init
+	LoadResources();
 	this.gamefield = new Field(FIELDSIZE, TILESIZE);
 
 	this.looping = new Object();
@@ -27,41 +26,30 @@ function Game() {
 }
 
 Game.prototype.update = function() {
-	this.startX = this.startX + 1;
 };
 
 Game.prototype.draw = function() {
-	this.ctx.fillStyle = "gray";
-	this.ctx.fillRect(0, 0, width, height);
-	this.ctx.fillStyle = "red";
-	this.ctx.fillRect(this.startX, this.startY, this.tileSize, this.tileSize);
+	this.gamefield.draw(this.ctx);
 };
 
 Game.prototype.run = function() {
-		var loops = 0;
+	var loops = 0;
 
-		while ((new Date).getTime() > this.looping.nextGameTick && loops < this.looping.maxFrameSkip) {
-			this.update();
-			this.looping.nextGameTick += this.looping.skipTicks;
-			loops++;
-		}
+	while ((new Date).getTime() > this.looping.nextGameTick && loops < this.looping.maxFrameSkip) {
+		this.update();
+		this.looping.nextGameTick += this.looping.skipTicks;
+		loops++;
+	}
 
-		this.draw();
+	this.draw();
 };
 
-Game.prototype.handleKeyDown = function(e) {
+handleKeyDown = function(e) {
 	if(e.keyCode == 87) {
 		// w pressed
-		this.player.moveUp(this.gamefield);
+		myGame.player1.moveUp(myGame.gamefield);
 	}
 };
-
-var myGame = new Game();
-
-// Start the game loop
-myGame._intervalID = setInterval("myGame.run()", 1000 / myGame.fps);
-
-
 
 // Player class
 function Player(x, y, size) {
@@ -84,5 +72,11 @@ Player.prototype.moveUp = function(gamefield) {
 }
 
 
+var myGame = new Game();
+
+// Start the game loop
+myGame._intervalID = setInterval("myGame.run()", 1000 / myGame.fps);
+
+
 // register key handlers
-document.body.onkeydown = myGame.handleKeyDown;
+document.body.onkeydown = handleKeyDown;
