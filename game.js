@@ -45,3 +45,7 @@ Game.prototype.run = function() {
 
 	this.draw();
 };
+
+Game.prototype.shootAt = function(x, y) {
+	alert("x: " + x.toString() + " y: " + y.toString());
+}

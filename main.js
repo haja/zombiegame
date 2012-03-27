@@ -33,6 +33,10 @@ handleKeyUp = function(e) {
 	}
 }
 
+handleMouseDown = function(e) {
+	myGame.shootAt(e.clientX - ourCanvas.offsetLeft, e.clientY - ourCanvas.offsetTop);
+}
+
 
 var myGame = new Game();
 
@@ -43,3 +47,6 @@ myGame._intervalID = setInterval("myGame.run()", 1000 / myGame.fps);
 // register key handlers
 document.body.onkeydown = handleKeyDown;
 document.body.onkeyup = handleKeyUp;
+
+var ourCanvas = document.getElementById("canvas");
+ourCanvas.onmousedown = handleMouseDown;
