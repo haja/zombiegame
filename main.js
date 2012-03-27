@@ -53,6 +53,12 @@ handleKeyDown = function(e) {
 	} else if(e.keyCode == 83) {
 		// s pressed
 		myGame.player1.isMovingDown = true;
+	} else if(e.keyCode == 65) {
+		// w pressed
+		myGame.player1.isMovingLeft = true;
+	} else if(e.keyCode == 68) {
+		// w pressed
+		myGame.player1.isMovingRight = true;
 	} else {
 		alert(e.keyCode);
 	}
@@ -65,6 +71,12 @@ handleKeyUp = function(e) {
 	} else if(e.keyCode == 83) {
 		// s pressed
 		myGame.player1.isMovingDown = false;
+	} else if(e.keyCode == 65) {
+		// w pressed
+		myGame.player1.isMovingLeft = false;
+	} else if(e.keyCode == 68) {
+		// w pressed
+		myGame.player1.isMovingRight = false;
 	}
 }
 
@@ -82,10 +94,14 @@ Player.prototype.update = function() {
 		this.moveUp(myGame.gamefield);
 	if(this.isMovingDown)
 		this.moveDown(myGame.gamefield);
+	if(this.isMovingLeft)
+		this.moveLeft(myGame.gamefield);
+	if(this.isMovingRight)
+		this.moveRight(myGame.gamefield);
 }
 
-Player.prototype.moveTo = function(newX, newY, tile) {
-	if(tile.walkable) {
+Player.prototype.moveTo = function(newX, newY, tile1, tile2) {
+	if(tile1.walkable && tile2.walkable) {
 		this.y = newY;
 		this.x = newX;
 		return true;
@@ -95,15 +111,32 @@ Player.prototype.moveTo = function(newX, newY, tile) {
 
 Player.prototype.moveUp = function(gamefield) {
 	var destinationY = this.y - this.MOVE_BY;
-	var tile = gamefield.getTileAt(this.x, destinationY);
-	return this.moveTo(this.x, destinationY, tile);
+	var tile1 = gamefield.getTileAt(this.x, destinationY);
+	var tile2 = gamefield.getTileAt(this.x + this.size, destinationY);
+	return this.moveTo(this.x, destinationY, tile1, tile2);
 }
 
 Player.prototype.moveDown = function(gamefield) {
 	var destinationY = this.y + this.MOVE_BY;
 	var collisionTestY = destinationY + this.size;
-	var tile = gamefield.getTileAt(this.x, collisionTestY);
-	return this.moveTo(this.x, destinationY, tile);
+	var tile1 = gamefield.getTileAt(this.x, collisionTestY);
+	var tile2 = gamefield.getTileAt(this.x + this.size, collisionTestY);
+	return this.moveTo(this.x, destinationY, tile1, tile2);
+}
+
+Player.prototype.moveLeft = function(gamefield) {
+	var destinationX = this.x - this.MOVE_BY;
+	var tile1 = gamefield.getTileAt(destinationX, this.y);
+	var tile2 = gamefield.getTileAt(destinationX, this.y + this.size);
+	return this.moveTo(destinationX, this.y, tile1, tile2);
+}
+
+Player.prototype.moveRight = function(gamefield) {
+	var destinationX = this.x + this.MOVE_BY;
+	var collisionTestX = destinationX + this.size;
+	var tile1 = gamefield.getTileAt(collisionTestX, this.y);
+	var tile2 = gamefield.getTileAt(collisionTestX, this.y + this.size);
+	return this.moveTo(destinationX, this.y, tile1, tile2);
 }
 
 Player.prototype.draw = function(ctx) {
