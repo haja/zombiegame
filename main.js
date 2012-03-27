@@ -26,6 +26,7 @@ function Game() {
 }
 
 Game.prototype.update = function() {
+	this.player1.update();
 };
 
 Game.prototype.draw = function() {
@@ -48,14 +49,24 @@ Game.prototype.run = function() {
 handleKeyDown = function(e) {
 	if(e.keyCode == 87) {
 		// w pressed
-		myGame.player1.moveUp(myGame.gamefield);
-	} else	if(e.keyCode == 83) {
+		myGame.player1.isMovingUp = true;
+	} else if(e.keyCode == 83) {
 		// s pressed
-		myGame.player1.moveDown(myGame.gamefield);
+		myGame.player1.isMovingDown = true;
 	} else {
 		alert(e.keyCode);
 	}
 };
+
+handleKeyUp = function(e) {
+	if(e.keyCode == 87) {
+		// w pressed
+		myGame.player1.isMovingUp = false;
+	} else if(e.keyCode == 83) {
+		// s pressed
+		myGame.player1.isMovingDown = false;
+	}
+}
 
 // Player class
 function Player(x, y, size) {
@@ -66,12 +77,17 @@ function Player(x, y, size) {
 	this.MOVE_BY = 2; // pixels we are moving in one step
 }
 
-Player.prototype.moveTo = function(x, y, gamefield) {
-	var tile = gamefield.getTileAt(x, y);
+Player.prototype.update = function() {
+	if(this.isMovingUp)
+		this.moveUp(myGame.gamefield);
+	if(this.isMovingDown)
+		this.moveDown(myGame.gamefield);
+}
 
+Player.prototype.moveTo = function(newX, newY, tile) {
 	if(tile.walkable) {
-		this.y = y;
-		this.x = x;
+		this.y = newY;
+		this.x = newX;
 		return true;
 	}
 	return false;
@@ -79,12 +95,15 @@ Player.prototype.moveTo = function(x, y, gamefield) {
 
 Player.prototype.moveUp = function(gamefield) {
 	var destinationY = this.y - this.MOVE_BY;
-	return Player.prototype.moveTo(this.x, destinationY, gamefield);
+	var tile = gamefield.getTileAt(this.x, destinationY);
+	return this.moveTo(this.x, destinationY, tile);
 }
 
 Player.prototype.moveDown = function(gamefield) {
 	var destinationY = this.y + this.MOVE_BY;
-	return Player.prototype.moveTo(this.x, destinationY, gamefield);
+	var collisionTestY = destinationY + this.size;
+	var tile = gamefield.getTileAt(this.x, collisionTestY);
+	return this.moveTo(this.x, destinationY, tile);
 }
 
 Player.prototype.draw = function(ctx) {
@@ -100,3 +119,4 @@ myGame._intervalID = setInterval("myGame.run()", 1000 / myGame.fps);
 
 // register key handlers
 document.body.onkeydown = handleKeyDown;
+document.body.onkeyup = handleKeyUp;
