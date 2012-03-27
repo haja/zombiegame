@@ -1,21 +1,30 @@
 init();
-var ctx;
 
-var HORZ_SIZE = 800;
-var VERT_SIZE = 450;
-var TILE_SIZE = 50;
+var width = 800; // canvas width
+var height = 450; // canvas height
+var frameTime = 1000 / 60; // 60 fps
+var tilesize = 50;	// size of a tile in pixels
+var field = new Field(200, 50); // the playing field
 
-function init() {
-	var canvas = document.getElementById("canvas");  
-	ctx = canvas.getContext("2d");  
+// Game Loop draw and update ----------------------------------
+function draw() {
+	var canvas = document.getElementById("canvas");  	
+	var ctx = canvas.getContext("2d");
+	field.draw(ctx);
+	ctx.fillStyle = "red";
+	ctx.fillRect(50, 50, 50, 50);
+}
+
+function update() {
+}
+
+function run() {
+	update();
 	draw();
 }
 
-
-function draw() {
-	ctx.fillStyle = "gray";  
-	ctx.fillRect(0, 0, 800, 450);  
-	ctx.fillStyle = "red";  
-	ctx.fillRect(50, 50, 50, 50);  
-}  
+function init() {
+	LoadResources();
+	setInterval("run();", frameTime);
+}
 
