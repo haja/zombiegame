@@ -60,4 +60,5 @@ Actor.prototype.moveRight = function(gamefield) {
 Actor.prototype.draw = function(ctx, cam) {
 	ctx.fillStyle="#FFFFFF";
 	ctx.fillRect(this.x - cam.x, this.y - cam.y, this.size, this.size);
+	ctx.drawImageRotated(images[0], this.x - cam.x + this.size / 2, this.y - cam.y + this.size / 2, 1);
 }

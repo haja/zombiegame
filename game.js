@@ -9,7 +9,15 @@ var PLAYER_SIZE = 50;
 function Game() {
 	this.fps = 48;
 	this.ctx = document.getElementById("canvas").getContext("2d");
-
+	this.ctx.drawImageRotated = function(image, x, y, rotation) {
+		this.save();
+		this.translate(x, y);
+		this.rotate(rotation);
+		var xpos = -image.width / 2;
+		var ypos = -image.height / 2;
+		this.drawImage(image, xpos, ypos);
+		this.restore();
+	}
 	this.player1 = new Actor(PLAYER_START_X, PLAYER_START_Y, PLAYER_SIZE);
 	this.camera = { x : 0, y : 0 };
 
