@@ -63,5 +63,5 @@ Actor.prototype.moveRight = function(gamefield) {
 }
 
 Actor.prototype.draw = function(ctx, cam) {
-	ctx.drawImageRotated(images[2], this.x - cam.x + this.size / 2, this.y - cam.y + this.size / 2, 1);
+	ctx.drawImageRotated(images[2], this.x - cam.x + this.size / 2, this.y - cam.y + this.size / 2, this.rotation);
 }
