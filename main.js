@@ -39,6 +39,7 @@ handleMouseDown = function(e) {
 
 handleMouseMove = function(e) {
 	textBox.innerHTML = "Mouse: x: " + (e.clientX - ourCanvas.offsetLeft) + " y: " + (e.clientY - ourCanvas.offsetTop);
+	myGame.mousePos = {x : (e.clientX - ourCanvas.offsetLeft), y : (e.clientY - ourCanvas.offsetTop)};
 }
 
 

@@ -24,6 +24,8 @@ function Game() {
 
 	this.camera = { x : 0, y : 0 };
 
+	this.mousePos = { x : 0, y : 0};
+
 	// field init
 	LoadResources();
 	this.gamefield = new Field(FIELDSIZE, TILESIZE);
@@ -45,6 +47,7 @@ function Game() {
 }
 
 Game.prototype.update = function() {
+	this.player1.turnToPos({x : this.mousePos.x + this.camera.x, y : this.mousePos.y + this.camera.y});
 	this.player1.update();
 	this.camera.x = this.player1.x - width / 2;
 	this.camera.y = this.player1.y - height / 2;

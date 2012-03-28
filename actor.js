@@ -3,8 +3,13 @@ function Actor(x, y, size, moveBy) {
 	this.x = x;
 	this.y = y;
 	this.size = size;
+	this.rotation = 0;
 
 	this.moveBy = moveBy; // pixels we are moving in one step
+}
+
+Actor.prototype.turnToPos = function(pos) {
+	this.rotation = Math.atan2(pos.y - (this.y + this.size / 2), pos.x - (this.x + this.size / 2));
 }
 
 Actor.prototype.update = function() {
