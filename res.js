@@ -17,4 +17,5 @@ function LoadImage(path) {
 function LoadResources() {
 	LoadImage("blocking.png");
 	LoadImage("nonblocking.png");
+	LoadImage("player.png");
 }
